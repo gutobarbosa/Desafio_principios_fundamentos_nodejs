@@ -34,13 +34,3 @@ transactionRouter.post('/', function (request, response) {
     }
 });
 exports["default"] = transactionRouter;
-/**
- *  try {
-    const { title, value, type } = request.body;
-
-    const transaction = createTransaction.execute();
-    return response.json(transaction);
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
- */
