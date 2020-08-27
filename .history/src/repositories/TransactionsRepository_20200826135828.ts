@@ -33,7 +33,7 @@ class TransactionsRepository {
       })
       .reduce((accumulator, actually) => {
         return accumulator + actually;
-      }, 0);
+      });
 
     const outcome = this.transactions
       .map(transaction => {
@@ -44,7 +44,7 @@ class TransactionsRepository {
       })
       .reduce((accumulator, actually) => {
         return accumulator + actually;
-      }, 0);
+      });
 
     const total = income - outcome;
     const balance = { income, outcome, total };

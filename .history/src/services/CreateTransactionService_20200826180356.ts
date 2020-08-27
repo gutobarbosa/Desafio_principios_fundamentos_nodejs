@@ -16,7 +16,7 @@ class CreateTransactionService {
 
   public execute({ title, value, type }: Request): Transaction {
     // eslint-disable-next-line no-constant-condition
-    if (type !== 'income' && type !== 'outcome') {
+    if (type !== 'outcome' || 'income') {
       throw new Error('Invalid type use just income or outcome in type');
     }
     const { total } = this.transactionsRepository.getBalance();

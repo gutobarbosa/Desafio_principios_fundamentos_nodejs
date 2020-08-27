@@ -15,21 +15,19 @@ class CreateTransactionService {
   }
 
   public execute({ title, value, type }: Request): Transaction {
-    // eslint-disable-next-line no-constant-condition
-    if (type !== 'income' && type !== 'outcome') {
-      throw new Error('Invalid type use just income or outcome in type');
-    }
     const { total } = this.transactionsRepository.getBalance();
-    if (type === 'outcome' && total < value) {
+    try {
+      if (type === 'income' && total > value) {
+        const transactions = this.transactionsRepository.create({
+          title,
+          value,
+          type,
+        });
+        return transactions;
+      }
+    } catch (error) {
       throw new Error('Account balance unavailable');
     }
-
-    const transactions = this.transactionsRepository.create({
-      title,
-      value,
-      type,
-    });
-    return transactions;
   }
 }
 

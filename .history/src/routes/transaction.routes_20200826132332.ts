@@ -7,10 +7,10 @@ const transactionsRepository = new TransactionsRepository();
 
 transactionRouter.get('/', (request, response) => {
   try {
-    const transactions = transactionsRepository.all();
+    const transaction = transactionsRepository.all();
     const balance = transactionsRepository.getBalance();
     return response.json({
-      transactions,
+      transaction,
       balance,
     });
   } catch (err) {

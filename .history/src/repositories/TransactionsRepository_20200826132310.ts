@@ -24,31 +24,24 @@ class TransactionsRepository {
   }
 
   public getBalance(): Balance {
-    const income = this.transactions
-      .map(transaction => {
+    const balance = this.transactions.reduce(
+      (accumulator: Balance, transaction: Transaction) => {
+        // Aqui nos temos tipo um MAP, no qual o accumulator é onde recebemos os valores e o transaction é a transação que esta passando no momento.
         if (transaction.type === 'income') {
-          return transaction.value;
+          accumulator.income += transaction.value;
+        } else if (transaction.type === 'outcome') {
+          accumulator.outcome += transaction.value;
+        } else {
+          return 0;
         }
-        return 0;
-      })
-      .reduce((accumulator, actually) => {
-        return accumulator + actually;
-      }, 0);
-
-    const outcome = this.transactions
-      .map(transaction => {
-        if (transaction.type === 'outcome') {
-          return transaction.value;
-        }
-        return 0;
-      })
-      .reduce((accumulator, actually) => {
-        return accumulator + actually;
-      }, 0);
-
-    const total = income - outcome;
-    const balance = { income, outcome, total };
-
+        return accumulator;
+      },
+      {
+        income: 0,
+        outcome: 0,
+        total: 0,
+      },
+    );
     return balance;
   }
 
